@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background: linear-gradient(to right, #ece9e6, #ffffff); /* Subtle background gradient */
+    margin: 0;
+    padding: 20px;
+    font-size: 16px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2.5em; /* Larger font size */
+    font-weight: 700; /* Bold font */
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient text */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#todo-list {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.todo-item:hover {
+    transform: scale(1.02);
+}
+
+.todo-item input[type="checkbox"] {
+    margin-right: 10px; /* Add margin to position checkbox */
+}
+
+.todo-item span {
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+.todo-item span.completed {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.add-todo {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+input[type="text"] {
+    padding: 10px;
+    width: 80%;
+    max-width: 300px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    background: linear-gradient(45deg, #6a11cb, #2575fc); /* Subtle gradient */
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 5px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #2575fc, #6a11cb);
+}
+
+.edit-input {
+    display: none;
+    margin-left: 10px;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 600px) {
+    .todo-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .add-todo {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px; /* Add margin for better spacing */
+    }
+
+    button {
+        width: 100%; /* Full width for buttons on small screens */
+        margin: 5px 0; /* Add margin for better spacing */
+    }
+}
