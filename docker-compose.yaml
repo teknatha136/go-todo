@@ -1,0 +1,42 @@
+services:
+  app:
+    build: .
+    environment:
+      - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@db:5432/${APP_DB_NAME}?sslmode=disable
+    ports:
+      - "0.0.0.0:${APP_PORT}:8080"
+    depends_on:
+      - db
+      - db-init  # Ensure the app waits for db-init to complete
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  db-init:
+    image: postgres:15-alpine  # You can use the same image or a lightweight one with psql
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    entrypoint: ["sh", "-c", "
+      export PGPASSWORD=$POSTGRES_PASSWORD;
+      until pg_isready -h db -U postgres; do
+        echo 'Waiting for PostgreSQL...';
+        sleep 2;
+      done;
+      psql -h db -U postgres -c \"CREATE DATABASE ${APP_DB_NAME};\" || echo 'Database already exists.';
+    "]
+
+volumes:
+  db-data:
