@@ -1,0 +1,42 @@
+name: Docker Build
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+jobs:
+  build:
+    env:
+      container_image_tag: ${{ vars.DOCKER_REPO }}:${{github.ref_name}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Build
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: '${{ vars.DOCKERHUB_USERNAME }}'
+          password: '${{ secrets.DOCKERHUB_PASSWORD }}'
+
+      - name: Build and push Docker image
+        id: 'docker-build'
+        uses: docker/build-push-action@v5
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ env.container_image_tag }}
+          cache-from: type=registry,ref=${{ vars.DOCKER_REPO }}:buildcache
+          cache-to: type=registry,ref=${{ vars.DOCKER_REPO }}:buildcache,mode=max
+      
+      - name: Send message 
+        uses: teknatha136/actions-google-chat-text-message@main
+        with:
+          google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          text-message: 'New Docker image pushed  `${{ env.container_image_tag }}`'
