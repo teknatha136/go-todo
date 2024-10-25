@@ -24,7 +24,7 @@ spec:
         - name: regcred
       containers:
         - name: todo
-          image: "selisebt/todo-docsify:bf2a7e5d6800ac2d471911e99023e0cde2512143"
+          image: "teknathdev/public:4a81d6da2a44dfb55dc4868078013cf691ab4a86"
           resources:
             requests:
               cpu: 50m
