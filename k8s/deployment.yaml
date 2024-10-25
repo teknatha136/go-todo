@@ -24,7 +24,7 @@ spec:
         - name: todo
           image: "teknathdev/public:179a5ef603b636dbd15815dd9467714c2444db1f"
           envFrom:
-            - configmapRef:
+            - configMapRef:
                 name: todo
           resources:
             requests:
