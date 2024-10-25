@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: todo
-          image: "teknathdev/public:16ece7d5599a0ff260f2b616cdd90cb7c241b24d"
+          image: "teknathdev/public:aca372e9cb6b2b72085fde583f6c3ee10f08b4fc"
           envfrom:
             - configmapRef:
                 name: todo
