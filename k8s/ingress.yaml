@@ -1,0 +1,34 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: todo.selise.tech
+spec:
+  secretName: todo.selise.tech
+  dnsNames:
+    - todo.selise.tech
+  issuerRef:
+    name: http01-cluster-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - todo.selise.tech
+      secretName: todo.selise.tech
+  rules:
+    - host: todo.selise.tech
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: todo
+                port:
+                  number: 8080
