@@ -56,4 +56,4 @@ jobs:
         uses: teknatha136/actions-google-chat-text-message@main
         with:
           google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          text-message: 'New Docker image pushed  `${{ env.container_image_tag }}`'
+          text-message: 'K8S Manifest Updated for `${{ env.container_image_tag }}`'
