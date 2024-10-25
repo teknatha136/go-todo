@@ -6,7 +6,7 @@ on:
 jobs:
   update:
     env:
-      container_image_tag: ${{ vars.DOCKER_REPO }}:${{github.ref_name}}
+      container_image_tag: ${{ vars.DOCKER_REPO }}:${{github.sha}}
     name: Deploy
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +39,7 @@ jobs:
         if: steps.docker-build.outcome == 'success'
         id: manifest-update
         run: |
-          yq -i -Y '.spec.template.spec.containers[0].image |= "${{ vars.DOCKER_REPO }}:${{ github.sha }}"' "./k8s/deployment.yaml"
+          yq eval '.spec.template.spec.containers[0].image = "${{ env.container_image_tag }}"' -i ./k8s/deployment.yaml
 
       - name: Commit and push changes
         if: steps.manifest-update.outcome == 'success'
