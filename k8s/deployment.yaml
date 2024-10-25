@@ -20,8 +20,6 @@ spec:
       labels:
         app: todo
     spec:
-      imagePullSecrets:
-        - name: regcred
       containers:
         - name: todo
           image: "teknathdev/public:4a81d6da2a44dfb55dc4868078013cf691ab4a86"
