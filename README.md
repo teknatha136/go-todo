@@ -15,3 +15,12 @@ go run main.go
 ```shell
 docker build -t golang-todo-app .
 ```
+
+# Docker compose 
+Create .env with following keys 
+```shell
+APP_PORT=8080
+POSTGRES_PASSWORD=password
+APP_DB_NAME=todo_app
+docker compose up -d
+```
